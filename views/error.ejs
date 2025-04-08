@@ -1,0 +1,14 @@
+<%- include('./partials/header.ejs') %>
+<title>Error Page</title>
+<link rel="stylesheet" href="/css/error.css">
+<%- include('./partials/nav.ejs') %>
+
+<main>
+    <section class="error">
+        <h1>Error <%= error.status %></h1>
+        <p><%= error.message %></p>
+        <a href="/" class="home-link">Go Home</a>
+    </section>
+</main>
+
+<%- include('./partials/footer.ejs') %>

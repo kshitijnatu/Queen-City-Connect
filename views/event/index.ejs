@@ -1,0 +1,33 @@
+<%- include('../partials/header.ejs') %>
+<title>Events</title>
+<link rel="stylesheet" href="/css/events/events.css">
+<%- include('../partials/nav.ejs') %>
+
+<main>
+    <% if (events.length > 0) { %>
+        <% const categories = {}; %>
+        <% events.forEach(event => { %>
+            <% if (!categories[event.category]) { categories[event.category] = []; } %>
+            <% categories[event.category].push(event); %>
+        <% }); %>
+
+        <% for (const category in categories) { %>
+            <section class="category">
+                <h2><%= category %></h2>
+                <ul>
+                    <% categories[category].forEach(event => { %>
+                        <li>
+                            <h3><a href="/events/<%= event.id %>"><%= event.title %> </a></h3>
+                            <p>Date: <%= new Date(event.startDateTime).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+                            <p>Location: <%= event.location %></p>
+                        </li>
+                    <% }); %>
+                </ul>
+            </section>
+        <% } %>
+    <% } else { %>
+        <p>No events available at the moment. Please check back later.</p>
+    <% } %>
+</main>
+
+<%- include('../partials/footer.ejs') %>

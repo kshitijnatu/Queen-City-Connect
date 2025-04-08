@@ -1,0 +1,35 @@
+<%- include('../partials/header.ejs') %>
+<title>Event Page</title>
+<link rel="stylesheet" href="/css/events/event.css">
+<%- include('../partials/nav.ejs') %>
+
+<main>
+    <div class="event">
+        <h2><%= event.title %></h2>
+        <p><strong>Category:</strong> <%= event.category %></p>
+        <div class="event-details">
+            <!-- <img src="/images/<%= event.image %>" alt="Event Image"> -->
+             <!-- <img src="../../public/images/<%= event.image %>" alt="Event Image"> -->
+             <img src="<%= event.image %>" alt="Event Image">
+              <!-- <img src="<%= typeof image !== 'undefined'? image: ''%>" alt=""> -->
+            <div class="event-highlights">
+                <p><strong>Host:</strong> <%= event.host %></p>
+                <p><strong>Start Date and Time:</strong> <%= new Date(event.startDateTime).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) %></p>
+                <p><strong>End Date and Time:</strong> <%= new Date(event.endDateTime).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) %></p>
+                <p><strong>Location:</strong> <%= event.location %></p>
+            </div>
+        </div>
+        <div class="event-description">
+            <h3>Event Description</h3>
+            <p><%= event.details %></p>
+        </div>
+        <div class="event-actions">
+            <form>
+                <button type="submit" class="edit-button" formmethod="GET" formaction="/events/<%= event.id %>/edit">Edit Event</button>
+                <button class="delete-button" type="submit" formmethod="POST" formaction="/events/<%= event.id %>?_method=DELETE">Delete Event</button>    
+            </form>            
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer.ejs') %>

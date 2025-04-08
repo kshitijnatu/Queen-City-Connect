@@ -1,0 +1,44 @@
+<%- include('../partials/header.ejs') %>
+<title>New Event</title>
+<link rel="stylesheet" href="/css/events/newEvent.css">
+<%- include('../partials/nav.ejs') %>
+
+<main>
+    <form action="/events" method="POST" enctype="multipart/form-data">
+        <label for="host-name">Host Name:</label>
+        <input type="text" id="host-name" name="host" required>
+
+        <label for="event-name">Event Name:</label>
+        <input type="text" id="event-name" name="title" required>
+        
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+            <option value="" selected>Select a category</option>
+            <option value="Professional Meetups">Professional Meetups</option>
+            <option value="Hobby Groups">Hobby Groups</option>
+            <option value="Local Gatherings">Local Gatherings</option>
+            <option value="Workshops">Workshops</option>
+            <option value="Conferences">Conferences</option>
+        </select>
+        
+        <label for="start-date-time">Start Date and Time:</label>
+        <input type="datetime-local" id="start-date-time" name="startDateTime" required>
+        
+        <label for="end-date-time">End Date and Time:</label>
+        <input type="datetime-local" id="end-date-time" name="endDateTime" required>
+        
+        <label for="event-location">Event Location:</label>
+        <input type="text" id="event-location" name="location" required>
+
+        
+        <label for="event-image">Event Image:</label>
+        <input type="file" id="event-image" name="image" required>
+        
+        <label for="event-details">Event Details:</label>
+        <textarea id="event-details" name="details" rows="5" required></textarea>
+        
+        <button type="submit">Create Event</button>
+    </form>
+</main>
+
+<%- include('../partials/footer.ejs') %>

@@ -1,0 +1,49 @@
+.intro h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.intro p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    color: #555;
+}
+
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.feature {
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+    border-radius: 50px;
+    padding: 20px;
+    text-align: center;
+    width: 250px;
+    transition: transform 0.3s;
+}
+
+.feature:hover {
+    transform: scale(1.05);
+}
+
+.feature i {
+    font-size: 2.5em;
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+.feature h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    font-size: 1em;
+    color: #666;
+}

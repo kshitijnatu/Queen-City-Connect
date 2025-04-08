@@ -1,0 +1,30 @@
+.error {
+    text-align: center;
+    padding: 50px;
+}
+
+.error h1 {
+    font-size: 3em;
+    color: #f44336;
+    margin-bottom: 20px;
+}
+
+.error p {
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.home-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.home-link:hover {
+    background-color: #45a049;
+}

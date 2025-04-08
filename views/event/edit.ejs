@@ -1,0 +1,45 @@
+<%- include('../partials/header.ejs') %>
+<title>Edit Event</title>
+<link rel="stylesheet" href="/css/events/newEvent.css">
+<%- include('../partials/nav.ejs') %>
+
+<main>
+    <h1>Edit Event</h1>
+    <form action="/events/<%= event.id %>?_method=PUT" method="POST">
+        <div>
+            <label for="title">Event Name:</label>
+            <input type="text" id="title" name="title" value="<%= event.title %>" required>
+        </div>
+        <div>
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+                <option value="Professional Meetups" <%= event.category === 'Professional Meetups' ? 'selected' : '' %>>Professional Meetups</option>
+                <option value="Hobby Groups" <%= event.category === 'Hobby Groups' ? 'selected' : '' %>>Hobby Groups</option>
+                <option value="Local Gatherings" <%= event.category === 'Local Gatherings' ? 'selected' : '' %>>Local Gatherings</option>
+                <option value="Workshops" <%= event.category === 'Workshops' ? 'selected' : '' %>>Workshops</option>
+                <option value="Conferences" <%= event.category === 'Conferences' ? 'selected' : '' %>>Conferences</option>
+            </select>
+        </div>
+        <div>
+            <label for="startDateTime">Start Date and Time:</label>
+            <input type="datetime-local" id="startDateTime" name="startDateTime" value="<%= event.startDateTime %>" required>
+        </div>
+        <div>
+            <label for="endDateTime">End Date and Time:</label>
+            <input type="datetime-local" id="endDateTime" name="endDateTime" value="<%= event.endDateTime %>" required>
+        </div>
+        <div>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" value="<%= event.location %>" required>
+        </div>
+        <div>
+            <label for="details">Description:</label>
+            <textarea id="details" name="details" required><%= event.details %></textarea>
+        </div>
+        <div>
+            <button type="submit">Update Event</button>
+        </div>
+    </form>
+</main>
+
+<%- include('../partials/footer.ejs') %>
