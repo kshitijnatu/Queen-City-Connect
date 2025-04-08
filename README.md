@@ -35,7 +35,7 @@ A full-stack web application built with **Node.js**, **Express.js**, and **Mongo
    ```
 4. Start the application:
    ```bash
-   npm start
+   nodemon app
    ```
 5. Open your browser and navigate to `http://localhost:3000`.
 
