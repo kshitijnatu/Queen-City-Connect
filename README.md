@@ -23,25 +23,21 @@ A full-stack web application built with **Node.js**, **Express.js**, and **Mongo
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   https://github.com/kshitijnatu/Queen-City-Connect.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd your-repo-name
+   cd Queen-City-Connect
    ```
 3. Install dependencies:
    ```bash
    npm install
    ```
-4. Create a `.env` file in the root directory and add your MongoDB connection string:
-   ```env
-   MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority
-   ```
-5. Start the application:
+4. Start the application:
    ```bash
-   npm start
+   nodemon app
    ```
-6. Open your browser and navigate to `http://localhost:3000`.
+5. Open your browser and navigate to `http://localhost:3000`.
 
 ## Usage
 
@@ -66,11 +62,3 @@ Natu_KshitijProject3/
 
 - Custom 404 page for routes that do not exist.
 - Graceful handling of server errors with detailed error messages.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-Feel free to customize this README file further based on your specific project details!
