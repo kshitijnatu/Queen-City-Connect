@@ -1,6 +1,7 @@
 // require modules
 const express = require('express');
 const morgan = require('morgan');
+require('dotenv').config();
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const mainRoutes = require('./routes/mainRoutes');
@@ -12,7 +13,7 @@ const app = express();
 // configure app
 let port = 3000;
 let host = 'localhost';
-const mongoURI = "mongodb+srv://admin:admin123@cluster0.5upwq.mongodb.net/project3?retryWrites=true&w=majority&appName=Cluster0";
+const mongoURI = process.env.MONGO_URI; // Placed mongoDB URI in .env file for security
 app.set('view engine', 'ejs');
 
 // connect to MongoDB
