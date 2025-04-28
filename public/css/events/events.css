@@ -1,53 +1,73 @@
 .category {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
+    padding: 0 20px;
 }
 
 .category h2 {
-    font-size: 2em;
-    color: #4CAF50;
-    margin-bottom: 20px;
+    font-size: 2.2em;
+    color: #43a047;
+    margin-bottom: 30px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    text-align: center;
+    position: relative;
+}
+
+.category h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #43a047;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
 }
 
 .category ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .category li {
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    transition: transform 0.3s, box-shadow 0.3s;
-    max-width: 80%;
-    max-height: 80%;
+    background: linear-gradient(135deg, #ffffff, #f1f8e9);
+    border-radius: 14px;
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
     margin-left: auto;
-    margin-right: auto; 
+    margin-right: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 6px solid #4CAF50;
 }
 
 .category li:hover {
-    transform: scale(1.05);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
 }
 
 .category h3 {
-    font-size: 1.5em;
-    color: #333;
+    font-size: 1.8em;
+    color: #2e7d32;
     margin-bottom: 10px;
 }
 
 .category h3 a {
     text-decoration: none;
-    color: inherit;
+    color: #2e7d32;
+    transition: color 0.3s ease;
 }
 
 .category h3 a:hover {
-    color: #4CAF50;
+    color: #66bb6a;
 }
 
 .category p {
-    font-size: 1em;
-    color: #666;
+    font-size: 1.05em;
+    color: #444;
+    line-height: 1.6;
+    margin-top: 8px;
 }
