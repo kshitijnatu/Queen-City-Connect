@@ -20,9 +20,11 @@ exports.new = (req, res) => {
 exports.create = (req, res, next) => {
     let event = new eventsModel(req.body);
     event.image = '/images/' + req.file.filename;
+    event.host = req.session.user;
     // console.log(event);
-    event.save(event)
+    event.save()
     .then(() => {
+        req.flash('success', 'Event created successfully');
         res.redirect('/events');
     })
     .catch(err => {
@@ -38,14 +40,7 @@ exports.create = (req, res, next) => {
 exports.show = (req, res, next) => {
     let id = req.params.id;
 
-    // a objectId is a 24-bit Hex String
-    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error('Invalid story id');
-        err.status = 400;
-        return next(err);
-    }    
-
-    eventsModel.findById(id)
+    eventsModel.findById(id).populate('host', 'firstName lastName')
         .then((event) => {
             if (event) {
                 res.render('./event/event', {event});
@@ -65,21 +60,15 @@ exports.edit = (req, res, next) => {
     let id = req.params.id;
 
     // a objectId is a 24-bit Hex String
-    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error('Invalid story id');
-        err.status = 400;
-        return next(err);
-    }
+    // if(!id.match(/^[0-9a-fA-F]{24}$/)) {
+    //     let err = new Error('Invalid story id');
+    //     err.status = 400;
+    //     return next(err);
+    // }
 
     eventsModel.findById(id)
         .then((event) => {
-            if (event) {
-                res.render('./event/edit', {event});
-            } else {
-                let err = new Error('Cannot find an event with id ' + id);
-                err.status = 404;
-                next(err);
-            }        
+            res.render('./event/edit', {event});
         })
         .catch(err => {
             next(err);
@@ -92,21 +81,19 @@ exports.update = (req, res, next) => {
     let id = req.params.id;
 
     // a objectId is a 24-bit Hex String
-    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error('Invalid story id');
-        err.status = 400;
-        return next(err);
+    // if(!id.match(/^[0-9a-fA-F]{24}$/)) {
+    //     let err = new Error('Invalid story id');
+    //     err.status = 400;
+    //     return next(err);
+    // }
+
+    if (req.file) {
+        event.image = '/images/' + req.file.filename;
     }
 
     eventsModel.findByIdAndUpdate(id, event, {useFindAndModify: false, runValidators: true})
         .then((event) => {
-            if (event) {
-                res.redirect('/events/' + id);                
-            } else {
-                let err = new Error('Cannot find a story with id ' + id);
-                err.status = 404;
-                next(err);
-            }
+            res.redirect('/events/' + id);                
         })
         .catch(err => {
             if (err.name === 'ValidationError') {
@@ -121,21 +108,16 @@ exports.delete = (req, res, next) => {
     let id = req.params.id;
 
     // a objectId is a 24-bit Hex String
-    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error('Invalid story id');
-        err.status = 400;
-        return next(err);
-    }
+    // if(!id.match(/^[0-9a-fA-F]{24}$/)) {
+    //     let err = new Error('Invalid story id');
+    //     err.status = 400;
+    //     return next(err);
+    // }
 
     eventsModel.findByIdAndDelete(id, {useFindAndModify: false, runValidators: true})
         .then((event) => {
-            if (event) {
-                res.redirect('/events');                
-            } else {
-                let err = new Error('Cannot find a story with id ' + id);
-                err.status = 404;
-                next(err);
-            }
+            req.flash('success', 'Event deleted successfully');
+            res.redirect('/events');        
         })
         .catch(err => {
             next(err);
