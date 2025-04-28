@@ -12,7 +12,7 @@ const eventSchema = new Schema({
         required: true
     },
     host: {
-        type: String,
+        type: Schema.Types.ObjectId, ref: 'User',
         required: true
     },
     startDateTime: {
