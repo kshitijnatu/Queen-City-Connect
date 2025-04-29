@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+.profile {
+    max-width: 700px;
+    margin: 60px auto;
+    background: #81C784;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.profile:hover {
+    transform: translateY(-5px);
+}
+
+.profile h1 {
+    font-size: 3em;
+    margin-bottom: 25px;
+    color: #1E1E1E;
+}
+
+.profile-details p {
+    font-size: 1.3em;
+    margin: 12px 0;
+    color: #1E1E1E;
+}
+
+.profile-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.profile-actions .edit-button,
+.profile-actions .delete-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.profile-actions .edit-button {
+    background-color: #42A5F5;
+    color: white;
+}
+
+.profile-actions .delete-button {
+    background-color: #EF5350;
+    color: white;
+}
+
+.profile-actions .edit-button:hover {
+    background-color: #64B5F6;
+    box-shadow: 0 0 10px #64B5F6;
+}
+
+.profile-actions .delete-button:hover {
+    background-color: #E53935;
+    box-shadow: 0 0 10px #E57373;
+}
+
+.user-events {
+    margin-top: 60px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.user-events h2 {
+    font-size: 2.5em;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.user-events h3 {
+    font-size: 1.8em;
+    color: #4CAF50;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    border-bottom: 2px solid #2E7D32;
+    padding-bottom: 5px;
+}
+
+.user-events p {
+    font-size: 1.1em;
+    color: #4CAF50;
+    text-align: center;
+}
+
+.event-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.event-item {
+    background-color: #1C1C1C;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 20px;
+    width: 320px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.event-item:hover {
+    box-shadow: 0 0 15px #28282B;
+    transform: translateY(-3px);
+}
+
+.event-item h3:hover {
+    color: #4CAF50;
+}
+
+.event-link {
+    text-decoration: none;
+    color: #90CAF9;
+    font-weight: bold;
+    display: block;
+    transition: color 0.3s;
+}
+
+.event-link:hover {
+    color: #64B5F6;
+}
+
+.event-link h3 {
+    font-size: 1.6em;
+    color: white;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.event-link p {
+    font-size: 1em;
+    color: white;
+    margin: 5px 0;
+}
+
+.event-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.event-actions .edit-button,
+.event-actions .delete-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.event-actions .edit-button {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.event-actions .delete-button {
+    background-color: #F44336;
+    color: #fff;
+}
+
+.event-actions .edit-button:hover {
+    background-color: #66BB6A;
+    box-shadow: 0 0 10px #66BB6A;
+}
+
+.event-actions .delete-button:hover {
+    background-color: #EF5350;
+    box-shadow: 0 0 10px #EF5350;
+}
