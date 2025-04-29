@@ -1,0 +1,52 @@
+<%- include('../partials/header.ejs') %>
+<title>Profile</title>
+<link rel="stylesheet" href="/css/user/profile.css">
+<%- include('../partials/nav.ejs') %>
+
+<main>
+    <section class="profile">
+        <h1>Your Profile</h1>
+        <div class="profile-details">
+            <p><strong>First Name:</strong> <%= user.firstName %></p>
+            <p><strong>Last Name:</strong> <%= user.lastName %></p>
+            <p><strong>Email:</strong> <%= user.email %></p>
+        </div>
+    </section>
+
+    <section class="user-events">
+        <h2>Welcome, <%= user.firstName %></h2>
+        <% if (events.length > 0) { %>
+            <p>You have created the following events:</p>
+            <% const groupedEvents = {}; %>
+            <% events.forEach(event => { %>
+                <% if (!groupedEvents[event.category]) { groupedEvents[event.category] = []; } %>
+                <% groupedEvents[event.category].push(event); %>
+            <% }); %>
+
+            <% for (const category in groupedEvents) { %>
+                <h3><%= category %></h3>
+                <ul class="event-list">
+                    <% groupedEvents[category].forEach(event => { %>
+                        <li class="event-item">
+                            <a href="/events/<%= event._id %>" class="event-link">
+                                <h3><%= event.title %></h3>
+                                <p><strong>Date:</strong> <%= new Date(event.startDateTime).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+                                <p><strong>Location:</strong> <%= event.location %></p>
+                            </a>
+                            <div class="event-actions">
+                                <form>
+                                    <button type="submit" class="edit-button" formmethod="GET" formaction="/events/<%= event._id %>/edit">Edit Event</button>
+                                    <button class="delete-button" type="submit" formmethod="POST" formaction="/events/<%= event._id %>?_method=DELETE">Delete Event</button>
+                                </form>
+                            </div>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } %>
+        <% } else { %>
+            <p>You have not created any events.</p>
+        <% } %>
+    </section>
+</main>
+
+<%- include('../partials/footer.ejs') %>
