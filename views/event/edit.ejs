@@ -5,7 +5,7 @@
 
 <main>
     <h1>Edit Event</h1>
-    <form action="/events/<%= event.id %>?_method=PUT" method="POST">
+    <form action="/events/<%= event.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
         <div>
             <label for="title">Event Name:</label>
             <input type="text" id="title" name="title" value="<%= event.title %>" required>
@@ -22,15 +22,19 @@
         </div>
         <div>
             <label for="startDateTime">Start Date and Time:</label>
-            <input type="datetime-local" id="startDateTime" name="startDateTime" value="<%= event.startDateTime %>" required>
+            <input type="datetime-local" id="startDateTime" name="startDateTime" value="<%= new Date(event.startDateTime).toISOString().slice(0, 16) %>" required>
         </div>
         <div>
             <label for="endDateTime">End Date and Time:</label>
-            <input type="datetime-local" id="endDateTime" name="endDateTime" value="<%= event.endDateTime %>" required>
+            <input type="datetime-local" id="endDateTime" name="endDateTime" value="<%= new Date(event.endDateTime).toISOString().slice(0, 16) %>" required>
         </div>
         <div>
             <label for="location">Location:</label>
             <input type="text" id="location" name="location" value="<%= event.location %>" required>
+        </div>
+        <div>
+            <label for="event-image">Event Image:</label>
+            <input type="file" id="event-image" name="image">
         </div>
         <div>
             <label for="details">Description:</label>
