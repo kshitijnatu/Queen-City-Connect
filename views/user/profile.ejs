@@ -47,6 +47,25 @@
             <p>You have not created any events.</p>
         <% } %>
     </section>
+
+    <!-- RSVPs Section -->
+    <section class="user-rsvps">
+        <h2>Your RSVPs</h2>
+        <% if (rsvps.length > 0) { %>
+            <ul class="rsvp-list">
+                <% rsvps.forEach(rsvp => { %>
+                    <li class="rsvp-item">
+                        <h3><a href="/events/<%= rsvp.event._id %>"><%= rsvp.event.title %></a></h3>
+                        <p><strong>Date:</strong> <%= new Date(rsvp.event.startDateTime).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+                        <p><strong>Location:</strong> <%= rsvp.event.location %></p>
+                        <p><strong>Status:</strong> <%= rsvp.status %></p>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>You have not RSVPed to any events.</p>
+        <% } %>
+    </section>
 </main>
 
 <%- include('../partials/footer.ejs') %>
