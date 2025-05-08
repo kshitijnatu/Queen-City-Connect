@@ -1,5 +1,6 @@
 const userModel = require('../models/user');
 const eventModel = require('../models/event');
+const RSVP = require('../models/rsvp');
 
 exports.getUserLogin = (req, res) => {
     return res.render('user/login');
@@ -10,34 +11,45 @@ exports.getUserSignup = (req, res) => {
 };
 
 exports.getUserProfile = (req, res, next) => {
-    // res.render('user/profile');
-    let id = req.session.user;
-    Promise.all([userModel.findById(id), eventModel.find({host: id})])
-    .then(results => {
-        const [user, events] = results;
-        res.render('user/profile', {user, events});
-    })
-    .catch(err => next(err));
+    let userId = req.session.user;
+
+    Promise.all([
+        userModel.findById(userId),
+        eventModel.find({ host: userId }),
+        RSVP.find({ user: userId }).populate('event', 'title startDateTime location')
+    ])
+        .then(([user, events, rsvps]) => {
+            res.render('user/profile', { user, events, rsvps });
+        })
+        .catch(err => next(err));
 };
 
 exports.processUserLogin = (req, res, next) => {
     let email = req.body.email;
+    if (email) {
+        email = email.toLowerCase();
+
+    }
     let password = req.body.password;
+
     userModel.findOne({ email: email })
     .then(user => {
         if (!user) {
-            req.flash('error', 'wrong email address');
-            res.redirect('/user/login');
+            req.flash('error', 'Wrong email address');
+            return res.redirect('/user/login');
         } else {
             user.comparePassword(password)
             .then(result => {
                 if (result) {
                     req.session.user = user._id;
-                    req.flash('success', 'You have successfully logged in');
-                    res.redirect('/');
+
+                    req.session.save(err => {
+                        if (err) return next(err);
+                        req.flash('success', 'You have successfully logged in');
+                        res.redirect('/');
+                    });
                 } else {
-                    console.log('wrong password');
-                    req.flash('error', 'wrong password');
+                    req.flash('error', 'Wrong password');
                     res.redirect('/user/login');
                 }
             })
@@ -48,6 +60,10 @@ exports.processUserLogin = (req, res, next) => {
 
 exports.processUserSignup = (req, res, next) => {
     let user = new userModel(req.body);
+
+    if (user.email) {
+        user.email = user.email.toLowerCase();
+    }
     user.save()
     .then(user => {
         req.flash('success', 'You have successfully signed up. Please login to continue');
@@ -70,10 +86,14 @@ exports.processUserSignup = (req, res, next) => {
 };
 
 exports.logout = (req, res, next) => {
-    req.session.destroy(err => {
-        if(err) 
-            return next(err);
-       else
-            res.redirect('/user/login');  
+    req.flash('success', 'You have successfully logged out');
+
+    req.session.save(err => {
+        if (err) return next(err);
+
+        req.session.destroy(err => {
+            if (err) return next(err);
+            res.redirect('/user/login');
+        });
     });
 };
