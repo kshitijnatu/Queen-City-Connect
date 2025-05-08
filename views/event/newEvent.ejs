@@ -5,13 +5,12 @@
 
 <main>
     <form action="/events" method="POST" enctype="multipart/form-data">
-        <!-- <label for="host-name">Host Name:</label>
-        <input type="text" id="host-name" name="host" required> -->
 
         <label for="event-name">Event Name:</label>
         <input type="text" id="event-name" name="title" required>
         
         <label for="category">Category:</label>
+        <!-- <input type="text" id="category" name="category"> -->
         <select id="category" name="category" required>
             <option value="" selected>Select a category</option>
             <option value="Professional Meetups">Professional Meetups</option>
@@ -22,7 +21,7 @@
         </select>
         
         <label for="start-date-time">Start Date and Time:</label>
-        <input type="datetime-local" id="start-date-time" name="startDateTime" required>
+        <input type="datetime-local" id="start-date-time" name="startDateTime" min="<%= new Date().toISOString().slice(0, 16) %>" required>
         
         <label for="end-date-time">End Date and Time:</label>
         <input type="datetime-local" id="end-date-time" name="endDateTime" required>

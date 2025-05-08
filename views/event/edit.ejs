@@ -22,7 +22,8 @@
         </div>
         <div>
             <label for="startDateTime">Start Date and Time:</label>
-            <input type="datetime-local" id="startDateTime" name="startDateTime" value="<%= new Date(event.startDateTime).toISOString().slice(0, 16) %>" required>
+            <input type="datetime-local" id="start-date-time" name="startDateTime" value="<%= new Date(event.startDateTime).toISOString().slice(0, 16) %>" min="<%= new Date().toISOString().slice(0, 16) %>" required>
+
         </div>
         <div>
             <label for="endDateTime">End Date and Time:</label>
