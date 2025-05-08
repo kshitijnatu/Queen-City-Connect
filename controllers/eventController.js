@@ -1,10 +1,11 @@
 const eventsModel = require('../models/event');
+const RSVP = require('../models/rsvp');
 
 // GET /events: send the list of events
 exports.index = (req, res, next) => {
     eventsModel.find()
         .then((events) => {
-            res.render('./event/index', {events});
+            res.render('./event/index', { events });
         })
         .catch(err => {
             next(err);
@@ -21,54 +22,48 @@ exports.create = (req, res, next) => {
     let event = new eventsModel(req.body);
     event.image = '/images/' + req.file.filename;
     event.host = req.session.user;
-    // console.log(event);
     event.save()
-    .then(() => {
-        req.flash('success', 'Event created successfully');
-        res.redirect('/events');
-    })
-    .catch(err => {
-        if (err.name === 'ValidationError') {
-            err.status == 400;
-        }
-        next(err);
-    });
-    
+        .then(() => {
+            req.flash('success', 'Event created successfully');
+            res.redirect('/events');
+        })
+        .catch(err => {
+            if (err.name === 'ValidationError') {
+                err.status = 400;
+            }
+            next(err);
+        });
 };
 
 // GET /events/:id: send details of event identified by id
 exports.show = (req, res, next) => {
     let id = req.params.id;
 
-    eventsModel.findById(id).populate('host', 'firstName lastName')
-        .then((event) => {
-            if (event) {
-                res.render('./event/event', {event});
-            } else {
-                let err = new Error('Cannot find an event with id ' + id);
-                err.status = 404;
-                next(err);
-            }        
-        })
-        .catch(err => {
+    Promise.all([
+        eventsModel.findById(id).populate('host', 'firstName lastName'),
+        RSVP.countDocuments({ event: id, status: 'YES' }) // Only count "YES" RSVPs
+    ])
+    .then(([event, rsvpCount]) => {
+        if (event) {
+            res.render('./event/event', { event, rsvpCount });
+        } else {
+            let err = new Error('Cannot find an event with id ' + id);
+            err.status = 404;
             next(err);
-        });
+        }
+    })
+    .catch(err => {
+        next(err);
+    });
 };
 
 // GET /events/:id/edit: send html form for editing an existing event
 exports.edit = (req, res, next) => {
     let id = req.params.id;
 
-    // a objectId is a 24-bit Hex String
-    // if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-    //     let err = new Error('Invalid story id');
-    //     err.status = 400;
-    //     return next(err);
-    // }
-
     eventsModel.findById(id)
         .then((event) => {
-            res.render('./event/edit', {event});
+            res.render('./event/edit', { event });
         })
         .catch(err => {
             next(err);
@@ -80,24 +75,18 @@ exports.update = (req, res, next) => {
     let event = req.body;
     let id = req.params.id;
 
-    // a objectId is a 24-bit Hex String
-    // if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-    //     let err = new Error('Invalid story id');
-    //     err.status = 400;
-    //     return next(err);
-    // }
-
     if (req.file) {
         event.image = '/images/' + req.file.filename;
     }
 
-    eventsModel.findByIdAndUpdate(id, event, {useFindAndModify: false, runValidators: true})
-        .then((event) => {
-            res.redirect('/events/' + id);                
+    eventsModel.findByIdAndUpdate(id, event, { useFindAndModify: false, runValidators: true })
+        .then(() => {
+            req.flash('success', 'Event updated successfully');
+            res.redirect('/events/' + id);
         })
         .catch(err => {
             if (err.name === 'ValidationError') {
-                err.status(400);
+                err.status = 400;
             }
             next(err);
         });
@@ -107,19 +96,57 @@ exports.update = (req, res, next) => {
 exports.delete = (req, res, next) => {
     let id = req.params.id;
 
-    // a objectId is a 24-bit Hex String
-    // if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-    //     let err = new Error('Invalid story id');
-    //     err.status = 400;
-    //     return next(err);
-    // }
-
-    eventsModel.findByIdAndDelete(id, {useFindAndModify: false, runValidators: true})
-        .then((event) => {
+    eventsModel.findByIdAndDelete(id, { useFindAndModify: false })
+        .then(() => {
             req.flash('success', 'Event deleted successfully');
-            res.redirect('/events');        
+            // res.redirect('/events');
         })
         .catch(err => {
             next(err);
         });
+        
+    RSVP.deleteMany({ event: id })
+        .then(() => {
+            req.flash('success', 'RSVPs deleted successfully');
+            res.redirect('/events');
+        })
+        .catch(err => {
+            // console.error('Error deleting RSVPs:', err);
+            req.flash('error', 'Error deleting RSVPs');
+            next(err);
+        });
+};
+
+// POST /events/:id/rsvp: handle RSVP logic
+exports.rsvp = (req, res, next) => {
+    const eventId = req.params.id;
+    const userId = req.session.user;
+    const status = req.body.status;
+
+    eventsModel.findById(eventId)
+        .then(event => {
+            if (!event) {
+                let err = new Error('Event not found');
+                err.status = 404;
+                return next(err);
+            }
+            if (event.host.toString() === userId) {
+                req.flash('error', 'You cannot RSVP for your own event');
+                return res.redirect(`/events/${eventId}`);
+            }
+
+            // Update or create the RSVP in the database
+            return RSVP.findOneAndUpdate(
+                { event: eventId, user: userId },
+                { status },
+                { upsert: true, new: true, runValidators: true }
+            );
+        })
+        .then((result) => {
+            if (result) {
+                req.flash('success', 'RSVP updated successfully');
+                return res.redirect('/user/profile');
+            }
+        })
+        .catch(err => next(err));
 };
