@@ -57,3 +57,62 @@
     line-height: 1.6;
     margin-top: 10px;
 }
+
+.rsvp-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.rsvp-section h3 {
+    font-size: 1.8em;
+    color: #388e3c;
+    margin-bottom: 15px;
+}
+
+.rsvp-section form {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.rsvp-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.rsvp-button.yes {
+    background-color: #4caf50;
+    color: white;
+}
+
+.rsvp-button.no {
+    background-color: #f44336;
+    color: white;
+}
+
+.rsvp-button.maybe {
+    background-color: #ff9800;
+    color: white;
+}
+
+.rsvp-button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.rsvp-section p {
+    font-size: 1.2em;
+    color: #333;
+    margin-top: 10px;
+}
