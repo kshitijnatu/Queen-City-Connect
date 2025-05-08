@@ -7,9 +7,10 @@ A full-stack web application built with **Node.js**, **Express.js**, and **Mongo
 - **Dynamic Views**: Utilized **EJS templates** for rendering dynamic and responsive web pages.
 - **RESTful Routes**: Implemented CRUD operations for event management.
 - **User Authentication**: Integrated session-based authentication with **express-session** and **connect-mongo**.
+- **Rate Limiting**: Added **express-rate-limit** to prevent excessive login attempts.
 - **File Uploads**: Integrated **Multer** for secure image uploads.
 - **Database Integration**: Connected to **MongoDB Atlas** using **Mongoose** for schema-based data modeling.
-- **Middleware**: Used **Morgan** for logging, **Method-Override** for HTTP method support, and custom middlewares for authentication and validation.
+- **Middleware**: Used **Morgan** for logging, **Method-Override** for HTTP method support, and custom middlewares for authentication, validation, and rate limiting.
 - **Error Handling**: Custom 404 and server error pages for enhanced user experience.
 - **Responsive Design**: Styled with **CSS** for a clean and intuitive interface.
 
@@ -18,7 +19,7 @@ A full-stack web application built with **Node.js**, **Express.js**, and **Mongo
 - **Backend**: Node.js, Express.js
 - **Frontend**: EJS, CSS
 - **Database**: MongoDB Atlas
-- **Middleware**: Morgan, Method-Override, Multer, connect-flash
+- **Middleware**: Morgan, Method-Override, Multer, connect-flash, express-rate-limit
 
 ## Installation
 
@@ -34,11 +35,15 @@ A full-stack web application built with **Node.js**, **Express.js**, and **Mongo
    ```bash
    npm install
    ```
-4. Start the application:
+4. Create a `.env` file in the root directory and add your MongoDB connection string:
+   ```
+   MONGO_URI=your_mongodb_connection_string
+   ```
+5. Start the application:
    ```bash
    nodemon app
    ```
-5. Open your browser and navigate to `http://localhost:3000`.
+6. Open your browser and navigate to `http://localhost:3000`.
 
 ## Usage
 
@@ -47,6 +52,7 @@ A full-stack web application built with **Node.js**, **Express.js**, and **Mongo
 - Edit or delete existing events using the respective options.
 - Sign up or log in to access user-specific features like creating and managing events.
 - Upload images for events.
+- Rate limiting is applied to login attempts to prevent abuse.
 
 ## Project Structure
 
@@ -60,11 +66,13 @@ Queen-City-Connect/
 │   ├── eventController.js
 │   ├── mainController.js
 │   └── userController.js
-├── middlewares/        # Custom middleware for authentication and validation
+├── middlewares/        # Custom middleware for authentication, validation, and rate limiting
 │   ├── auth.js
-│   └── validator.js
+│   ├── validator.js
+│   └── rateLimiters.js
 ├── models/             # Mongoose models for MongoDB collections
 │   ├── event.js
+│   ├── rsvp.js
 │   └── user.js
 ├── public/             # Static assets (CSS, images, etc.)
 │   ├── css/
@@ -89,3 +97,4 @@ Queen-City-Connect/
 
 - Custom 404 page for routes that do not exist.
 - Graceful handling of server errors with detailed error messages.
+- Rate limiting error messages for excessive login attempts.
