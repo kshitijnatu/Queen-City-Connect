@@ -11,7 +11,6 @@ const mainRoutes = require('./routes/mainRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const userRoutes = require('./routes/userRoutes');
 const User = require('./models/user');
-const user = require('./models/user');
 
 // create express app
 const app = express();
@@ -62,11 +61,6 @@ app.use((req, res, next) => {
         res.locals.successMessages = req.flash('success');
         next();
     }
-    //console.log(req.session);
-    // res.locals.user = req.session.user || null;
-    // res.locals.errorMessages = req.flash('error');
-    // res.locals.successMessages = req.flash('success');
-    // next();
 });
 
 // mount middleware
