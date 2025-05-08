@@ -190,3 +190,61 @@
     background-color: #EF5350;
     box-shadow: 0 0 10px #EF5350;
 }
+
+.user-rsvps {
+    margin-top: 60px;
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.user-rsvps h2 {
+    font-size: 2.5em;
+    color: #388e3c;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.rsvp-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.rsvp-item {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rsvp-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.rsvp-item h3 {
+    font-size: 1.8em;
+    color: #2e7d32;
+    margin-bottom: 10px;
+}
+
+.rsvp-item h3 a {
+    text-decoration: none;
+    color: #2e7d32;
+    transition: color 0.3s ease;
+}
+
+.rsvp-item h3 a:hover {
+    color: #66bb6a;
+}
+
+.rsvp-item p {
+    font-size: 1.1em;
+    color: #555;
+    margin: 5px 0;
+}
