@@ -16,8 +16,8 @@ const User = require('./models/user');
 const app = express();
 
 // configure app
-let port = 3000;
-let host = 'localhost';
+let port = process.env.PORT || 8080;
+// let host = 'localhost';
 const mongoURI = process.env.MONGO_URI;
 app.set('view engine', 'ejs');
 
@@ -25,7 +25,7 @@ app.set('view engine', 'ejs');
 mongoose.connect(mongoURI)
     .then(() => {
         // start the server
-        app.listen(port, host, () => { 
+        app.listen(port, () => { 
             console.log('Server is running on port', port);
         });    
     })
